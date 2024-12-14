@@ -15,14 +15,10 @@ import java.time.Duration;
 public class BaseTest {
     protected WebDriver driver;
     @BeforeMethod
-    @Parameters({"browser", "userAgent","width", "height", "deviceScaleFactor", "mobile"})
+    @Parameters({"browser", "device"})
     public void setUp(@Optional("chrome") String browser,
-                       @Optional("Mozilla/5.0 (iPad; CPU OS 10_3 like Mac OS X) AppleWebKit/602.1.50 (KHTML, like Gecko) Version/10.0 Mobile/14E5239e Safari/602.1") String userAgent,
-                       @Optional("1920") int width,
-                       @Optional("1080") int height,
-                       @Optional("100") double deviceScaleFactor,
-                       @Optional("false") boolean mobile) throws MalformedURLException, URISyntaxException {
-        driver = BrowserFactory.getDriver(browser, userAgent, width, height, deviceScaleFactor, mobile);
+                       @Optional("desktop") String device) throws MalformedURLException, URISyntaxException {
+        driver = BrowserFactory.getDriver(browser, device);
         WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(5));
     }
 

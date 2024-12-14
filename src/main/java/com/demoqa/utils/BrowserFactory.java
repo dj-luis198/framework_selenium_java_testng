@@ -1,62 +1,51 @@
 package com.demoqa.utils;
 
 import org.openqa.selenium.Dimension;
-import org.openqa.selenium.PageLoadStrategy;
 import org.openqa.selenium.WebDriver;
-import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.chrome.ChromeOptions;
-import org.openqa.selenium.devtools.DevTools;
-import org.openqa.selenium.devtools.v129.emulation.Emulation;
 import org.openqa.selenium.edge.EdgeDriver;
-import org.openqa.selenium.firefox.FirefoxDriver;
 import org.openqa.selenium.firefox.FirefoxOptions;
-import org.openqa.selenium.firefox.FirefoxProfile;
+import org.openqa.selenium.remote.RemoteWebDriver;
 
 import java.net.MalformedURLException;
 import java.net.URISyntaxException;
-import java.util.HashMap;
+import java.net.URL;
 import java.util.Map;
-import java.util.Optional;
 
 public class BrowserFactory {
 
-    public static WebDriver getDriver(String browser, String userAgent,int width, int height, double deviceScaleFactor, boolean mobile) throws URISyntaxException, MalformedURLException {
+
+    public static WebDriver getDriver(String browser, String device) throws URISyntaxException, MalformedURLException {
          WebDriver driver = null;
+         String hubURL = "http://localhost:4444/wd/hub";
         if (browser.equalsIgnoreCase("chrome")) {
             ChromeOptions options = new ChromeOptions();
-            Map<String, Object> pref = new HashMap<String, Object>();
-            //options.addArguments("--headless=new");
-            options.addArguments("--start-fullscreen");
-            options.setExperimentalOption("prefs", pref);
-            options.setPageLoadStrategy(PageLoadStrategy.NORMAL);
-
-            driver =new ChromeDriver(options);
-            DevTools devTools = ((ChromeDriver) driver).getDevTools();
-            devTools.createSession();
-            devTools.send(Emulation.setDeviceMetricsOverride(
-                    width,
-                    height,
-                    deviceScaleFactor,
-                    mobile,
-                    Optional.empty(),
-                    Optional.empty(),
-                    Optional.empty(),
-                    Optional.empty(),
-                    Optional.empty(),
-                    Optional.empty(),
-                    Optional.empty(),
-                    Optional.empty(),
-                    Optional.empty(),
-                    Optional.empty()));
+            if (device.equalsIgnoreCase("mobile")) {
+                options.addArguments("--window-size=375,667");
+                options.setExperimentalOption("mobileEmulation", Map.of("deviceName", "Pixel 2"));
+            } else
+                if (device.equalsIgnoreCase("tablet")) {
+                    options.addArguments("--window-size=768,1024");
+                    options.setExperimentalOption("mobileEmulation", Map.of("deviceName", "iPad"));
+                } else
+                    if (device.equalsIgnoreCase("desktop")) {
+                        options.addArguments("--window-size=1920,1080");
+                    }
+                    driver = new RemoteWebDriver(new URL(hubURL), options);
         } else
             if (browser.equalsIgnoreCase("firefox")) {
                 FirefoxOptions options = new FirefoxOptions();
-                FirefoxProfile profile = new FirefoxProfile();
-                profile.setPreference("general.useragent.override", userAgent);
-                options.setProfile(profile);
-                driver = new FirefoxDriver(options);
-                driver.manage().window().setSize(new Dimension(375, 667));
-                //driver.manage().window().fullscreen();
+                if (device.equalsIgnoreCase("mobile")) {
+                    options.addPreference("general.useragent.override", "Mozilla/5.0 (Linux; Android 8.0.0; Pixel 2) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/67.0.3396.87 Mobile Safari/537.36");
+                    driver = new RemoteWebDriver(new URL(hubURL), options);
+                    driver.manage().window().setSize(new Dimension(375, 667));
+                } else if (device.equalsIgnoreCase("tablet")) {
+                    options.addPreference("general.useragent.override", "Mozilla/5.0 (iPad; CPU OS 10_3 like Mac OS X) AppleWebKit/602.1.50 (KHTML, like Gecko) Version/10.0 Mobile/14E5239e Safari/602.1");
+                    driver = new RemoteWebDriver(new URL(hubURL), options);
+                    driver.manage().window().setSize(new Dimension(768, 1024));
+                } else if (device.equalsIgnoreCase("desktop")) {
+                    driver = new RemoteWebDriver(new URL(hubURL), options);
+                    driver.manage().window().setSize(new Dimension(1920, 1080)); }
             } else
                 if (browser.equalsIgnoreCase("edge")) {
                     driver = new EdgeDriver();

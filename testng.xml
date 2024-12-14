@@ -2,32 +2,25 @@
 <suite name="ParallelTests" parallel="classes" thread-count="3">
     <test name="ChromeTestsMobile">
         <parameter name="browser" value="chrome" />
-        <parameter name="width" value="375" />
-        <parameter name="height" value="667" />
-        <parameter name="deviceScaleFactor" value="1" />
-        <parameter name="mobile" value="true" />
+        <parameter name="device" value="desktop" />
         <classes>
             <class name="com.demoqa.tests.home.HomeTest" />
-            <class name="com.demoqa.tests.butons.ButonTest" />
+            <class name="com.demoqa.tests.buttons.ButtonTest" />
         </classes>
     </test>
     <test name="ChromeTestsTablet">
         <parameter name="browser" value="chrome" />
-        <parameter name="width" value="768" />
-        <parameter name="height" value="1024" />
-        <parameter name="deviceScaleFactor" value="1" />
-        <parameter name="mobile" value="true" />
+        <parameter name="device" value="mobile" />
         <classes>
             <class name="com.demoqa.tests.home.HomeTest" />
-            <class name="com.demoqa.tests.butons.ButonTest" />
+            <class name="com.demoqa.tests.buttons.ButtonTest" />
         </classes>
     </test>
     <test name="ChromeTestsMobileFirefox">
         <parameter name="browser" value="firefox" />
-        <parameter name="userAgent" value="Mozilla/5.0 (Linux; Android 8.0.0; Pixel 2) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/67.0.3396.87 Mobile Safari/537.36" />
-        <classes>
+        <parameter name="device" value="mobile" />        <classes>
             <class name="com.demoqa.tests.home.HomeTest" />
-            <class name="com.demoqa.tests.butons.ButonTest" />
+            <class name="com.demoqa.tests.buttons.ButtonTest" />
         </classes>
     </test>
 </suite>
