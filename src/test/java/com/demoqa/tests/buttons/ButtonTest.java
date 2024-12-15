@@ -14,7 +14,7 @@ public class ButtonTest extends BaseTest {
         String title = driver.getTitle();
         System.out.println(title);
         try {
-            sleep(20000);
+            sleep(10000);
         } catch (InterruptedException e) {
             throw new RuntimeException(e);
         }
@@ -26,7 +26,7 @@ public class ButtonTest extends BaseTest {
         String url = driver.getCurrentUrl();
         System.out.println(url);
         try {
-            sleep(20000);
+            sleep(10000);
         } catch (InterruptedException e) {
             throw new RuntimeException(e);
         }
