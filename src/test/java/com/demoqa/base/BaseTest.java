@@ -11,19 +11,21 @@ import org.testng.annotations.Parameters;
 import java.time.Duration;
 
 public class BaseTest {
-    protected WebDriver driver;
+    BrowserFactory browserFactory = new BrowserFactory();
     @BeforeMethod
     @Parameters({"browser", "deviceName"})
     public void setUp(@Optional("chrome") String browser,
                        @Optional("Nest Hub Max") String deviceName) {
-        driver = BrowserFactory.getDriver(browser, deviceName);
+        WebDriver driver = browserFactory.getDriver(browser, deviceName);
         WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(5));
     }
 
     @AfterMethod
     public void tearDown() {
-        if (driver != null) {
-            driver.quit();
-        }
+        browserFactory.quitDriver();
+    }
+
+    protected WebDriver getDriver() {
+        return browserFactory.getDriver();
     }
 }

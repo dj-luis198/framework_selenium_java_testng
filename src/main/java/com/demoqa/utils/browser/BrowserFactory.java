@@ -3,6 +3,8 @@ package com.demoqa.utils.browser;
 import com.demoqa.utils.emulatorDeviceWeb.Device;
 import com.demoqa.utils.emulatorDeviceWeb.JsonReader;
 import com.demoqa.utils.externalFileUtility.PropertyUtility;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.openqa.selenium.Dimension;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeOptions;
@@ -13,65 +15,87 @@ import java.net.MalformedURLException;
 import java.net.URL;
 import java.util.Map;
 
+
 public class BrowserFactory {
+
+    private static final ThreadLocal<WebDriver> driver = new ThreadLocal<>();
+    private static Logger logger = LogManager.getLogger(BrowserFactory.class);
+
     private static final PropertyUtility prop = new PropertyUtility();
     private static final String HUB_URL = prop.initProperties("selenium_grid").getProperty("hub.url");
-    private static final String DEVICES_FILE = prop.initProperties("browser_factory").getProperty("devices.file");
+    private static final String DEVICES_FILE = prop.initProperties("paths").getProperty("devices.file");
 
-    public static WebDriver getDriver(String browser, String deviceName) {
-        WebDriver driver;
+    public WebDriver getDriver() {
+        return driver.get();
+    }
+
+    public void setDriver(WebDriver webDriver) {
+        driver.set(webDriver);
+    }
+
+    public void quitDriver() {
+        try {
+            WebDriver webDriver = driver.get();
+            if (webDriver != null) {
+                webDriver.quit();
+            }
+        } finally {
+            driver.remove();
+        }
+    }
+
+    public WebDriver getDriver(String browser, String deviceName) {
         try {
             Device device = getDevice(deviceName);
-            driver = createDriver(browser, device);
+            setDriver(createDriver(browser, device));
         } catch (Exception e) {
             throw new RuntimeException(e);
         }
-        return driver;
+        return getDriver();
     }
 
-    private static Device getDevice(String deviceName) {
+    private Device getDevice(String deviceName) {
         JsonReader jsonReader = new JsonReader(DEVICES_FILE);
         return jsonReader.getDevice(deviceName);
     }
 
-    private static WebDriver createDriver(String browser, Device device) throws MalformedURLException {
-        WebDriver driver;
+    private WebDriver createDriver(String browser, Device device) throws MalformedURLException {
         switch (browser) {
             case "chrome":
-                driver = createChromeDriver(device);
+                setDriver(createChromeDriver(device));
                 break;
             case "firefox":
-                driver = createFirefoxDriver(device);
-                configureFirefoxDimensions(driver, device);
+                setDriver(createFirefoxDriver(device));
+                configureFirefoxDimensions(getDriver(), device);
                 break;
             default:
                 throw new UnsupportedOperationException("Browser " + browser + " is not supported");
         }
-        return driver;
+        return getDriver();
     }
 
-    private static WebDriver createChromeDriver(Device device) throws MalformedURLException {
+    private WebDriver createChromeDriver(Device device) throws MalformedURLException {
         ChromeOptions options = new ChromeOptions();
         configureChromeOptions(options, device);
         return new RemoteWebDriver(new URL(HUB_URL), options);
     }
 
-    private static WebDriver createFirefoxDriver(Device device) throws MalformedURLException {
+    private WebDriver createFirefoxDriver(Device device) throws MalformedURLException {
         FirefoxOptions options = new FirefoxOptions();
         configureFirefoxOptions(options, device);
         return new RemoteWebDriver(new URL(HUB_URL), options);
     }
 
-    private static void configureChromeOptions(ChromeOptions options, Device device) {
+    private void configureChromeOptions(ChromeOptions options, Device device) {
                 options.setExperimentalOption("mobileEmulation", Map.of("deviceName", device.getName()));
                 options.addArguments("--window-size=" + device.getWidth() + "," + device.getHeight());
     }
 
-    private static void configureFirefoxOptions(FirefoxOptions options, Device device) {
+    private void configureFirefoxOptions(FirefoxOptions options, Device device) {
         options.addPreference("general.useragent.override", device.getFirefoxUserAgent());
     }
 
-    private static void configureFirefoxDimensions( WebDriver driver, Device device) {
+    private void configureFirefoxDimensions( WebDriver driver, Device device) {
                 driver.manage().window().setSize(new Dimension(device.getWidth(), device.getHeight()));
     }
 }
