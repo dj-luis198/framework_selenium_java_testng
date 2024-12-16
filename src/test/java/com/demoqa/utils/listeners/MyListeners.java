@@ -20,10 +20,10 @@ import java.io.File;
 
 public class MyListeners extends BaseTest implements ITestListener {
 
-        private static final Logger logger = LogManager.getLogger(MyListeners.class);
+        private final Logger logger = LogManager.getLogger(MyListeners.class);
 
         ExtentReports report = ExtentReportGenerator.getExtentReport();
-        private static final ThreadLocal<ExtentTest> extentTest = new ThreadLocal<>();
+        private final ThreadLocal<ExtentTest> extentTest = new ThreadLocal<>();
 
         ExtentTest eTest;
 
@@ -59,20 +59,7 @@ public class MyListeners extends BaseTest implements ITestListener {
         @Override
         public void onTestSuccess(ITestResult result) {
             String testName = result.getMethod().getMethodName();
-            String testStatus = result.getStatus() == 1 ? "PASSED" : "FAILED";
-            String testTimeOut = String.valueOf(result.getEndMillis());
-            String testNameScreen = result.getMethod().getMethodName() + result.getTestContext().getCurrentXmlTest().getParameter("browser");
-            String deviceName = result.getMethod().getMethodName() + result.getTestContext().getCurrentXmlTest().getParameter("deviceName");
-            if (getDriver() != null) {
-                try {
-                    File screenshot = ((TakesScreenshot) getDriver()).getScreenshotAs(OutputType.FILE);
-                    File destFile = new File(System.getProperty("user.dir") + "/ExtentReports/Screenshots/"+testStatus+"_"+ testTimeOut+"_"+testNameScreen +"_"+ JavaUtility.replaceSpaces(deviceName)+".png");
-                    FileUtils.copyFile(screenshot, destFile);
-                    extentTest.get().addScreenCaptureFromPath("Screenshots/" + destFile.getName(), testName);
-                } catch (Exception e) {
-                    logger.error("Error Screenshots", e);
-                }
-            }
+            takeScreenshot(result, testName);
             extentTest.get().log(Status.PASS, testName + " got successfully executed");
             logger.info(AnsiColorUtils.applyGreen("test passed: " + testName));
         }
@@ -87,20 +74,7 @@ public class MyListeners extends BaseTest implements ITestListener {
                 }
             }
             String testName = result.getMethod().getMethodName();
-            String testStatus = result.getStatus() == 1 ? "PASSED" : "FAILED";
-            String testTimeOut = String.valueOf(result.getEndMillis());
-            String testNameScreen = result.getMethod().getMethodName() + result.getTestContext().getCurrentXmlTest().getParameter("browser");
-            String deviceName = result.getMethod().getMethodName() + result.getTestContext().getCurrentXmlTest().getParameter("deviceName");
-            if (getDriver() != null) {
-                try {
-                    File screenshot = ((TakesScreenshot) getDriver()).getScreenshotAs(OutputType.FILE);
-                    File destFile = new File(System.getProperty("user.dir") + "/ExtentReports/Screenshots/"+testStatus+"_"+ testTimeOut+"_"+testNameScreen +"_"+ JavaUtility.replaceSpaces(deviceName)+".png");
-                    FileUtils.copyFile(screenshot, destFile);
-                    extentTest.get().addScreenCaptureFromPath("Screenshots/"+ destFile.getName(), testName);
-                } catch (Exception e) {
-                    logger.error("Error Screenshots", e);
-                }
-            }
+            takeScreenshot(result, testName);
             extentTest.get().log(Status.FAIL, testName + " test failed");
             extentTest.get().fail(result.getThrowable());
             logger.error(AnsiColorUtils.applyRed("test failed: " + testName + "\n" + result.getThrowable()));
@@ -131,4 +105,21 @@ public class MyListeners extends BaseTest implements ITestListener {
             extentTest.get().skip(result.getThrowable());
             logger.warn(AnsiColorUtils.applyYellow("test skipped: " + testName + "\n" + result.getThrowable()));
         }
-    }
+
+        private void takeScreenshot(ITestResult result, String testName) {
+            String testStatus = result.getStatus() == 1 ? "PASSED" : "FAILED";
+            String testTimeOut = String.valueOf(result.getEndMillis());
+            String testNameScreen = result.getMethod().getMethodName() + result.getTestContext().getCurrentXmlTest().getParameter("browser");
+            String deviceName = result.getMethod().getMethodName() + result.getTestContext().getCurrentXmlTest().getParameter("deviceName");
+            if (getDriver() != null) {
+                try {
+                    File screenshot = ((TakesScreenshot) getDriver()).getScreenshotAs(OutputType.FILE);
+                    File destFile = new File(System.getProperty("user.dir") + "/ExtentReports/Screenshots/"+testStatus+"_"+ testTimeOut+"_"+testNameScreen +"_"+ JavaUtility.replaceSpaces(deviceName)+".png");
+                    FileUtils.copyFile(screenshot, destFile);
+                    extentTest.get().addScreenCaptureFromPath("Screenshots/"+ destFile.getName(), testName);
+                } catch (Exception e) {
+                    logger.error("Error Screenshots", e);
+                }
+            }
+        }
+}
