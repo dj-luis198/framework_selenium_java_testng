@@ -5,13 +5,13 @@ import com.aventstack.extentreports.ExtentTest;
 import com.aventstack.extentreports.Status;
 import com.demoqa.base.BaseTest;
 import com.demoqa.utils.extentReport.ExtentReportGenerator;
+import com.demoqa.utils.javaUtility.JavaUtility;
 import com.demoqa.utils.logsUtility.AnsiColorUtils;
 import org.apache.commons.io.FileUtils;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.openqa.selenium.OutputType;
 import org.openqa.selenium.TakesScreenshot;
-import org.openqa.selenium.WebDriver;
 import org.testng.ITestContext;
 import org.testng.ITestListener;
 import org.testng.ITestResult;
@@ -20,10 +20,10 @@ import java.io.File;
 
 public class MyListeners extends BaseTest implements ITestListener {
 
-        private static Logger logger = LogManager.getLogger(MyListeners.class);
+        private static final Logger logger = LogManager.getLogger(MyListeners.class);
 
         ExtentReports report = ExtentReportGenerator.getExtentReport();
-        private static ThreadLocal<ExtentTest> extentTest = new ThreadLocal<ExtentTest>();
+        private static final ThreadLocal<ExtentTest> extentTest = new ThreadLocal<>();
 
         ExtentTest eTest;
 
@@ -31,9 +31,9 @@ public class MyListeners extends BaseTest implements ITestListener {
         public void onTestStart(ITestResult result) {
             String browser = result.getTestContext().getCurrentXmlTest().getParameter("browser");
             String testName = result.getMethod().getMethodName();
-            String divice = System.getProperty("os.name") + "-" + System.getProperty("os.version") + "-"
+            String device = System.getProperty("os.name") + "-" + System.getProperty("os.version") + "-"
                     + System.getProperty("os.arch");
-            String emule = result.getTestContext().getCurrentXmlTest().getParameter("deviceName");
+            String emulate = result.getTestContext().getCurrentXmlTest().getParameter("deviceName");
             eTest = report.createTest(testName);
             extentTest.set(eTest);
             extentTest.get().assignCategory(result.getMethod().getGroups());
@@ -48,10 +48,10 @@ public class MyListeners extends BaseTest implements ITestListener {
             }
 
             if (!flag) {
-                extentTest.get().assignDevice(divice + "-" + browser+"-"+ emule);
+                extentTest.get().assignDevice(device + "-" + browser+"-"+ JavaUtility.replaceSpaces(emulate));
             } else {
                 browser = "API";
-                extentTest.get().assignDevice(divice + "-" + browser);
+                extentTest.get().assignDevice(device + "-" + browser);
             }
             logger.info(AnsiColorUtils.applyPurple("--- Started: " + testName + " brw:" + browser + " ---"));
         }
@@ -59,6 +59,20 @@ public class MyListeners extends BaseTest implements ITestListener {
         @Override
         public void onTestSuccess(ITestResult result) {
             String testName = result.getMethod().getMethodName();
+            String testStatus = result.getStatus() == 1 ? "PASSED" : "FAILED";
+            String testTimeOut = String.valueOf(result.getEndMillis());
+            String testNameScreen = result.getMethod().getMethodName() + result.getTestContext().getCurrentXmlTest().getParameter("browser");
+            String deviceName = result.getMethod().getMethodName() + result.getTestContext().getCurrentXmlTest().getParameter("deviceName");
+            if (getDriver() != null) {
+                try {
+                    File screenshot = ((TakesScreenshot) getDriver()).getScreenshotAs(OutputType.FILE);
+                    File destFile = new File(System.getProperty("user.dir") + "/ExtentReports/Screenshots/"+testStatus+"_"+ testTimeOut+"_"+testNameScreen +"_"+ JavaUtility.replaceSpaces(deviceName)+".png");
+                    FileUtils.copyFile(screenshot, destFile);
+                    extentTest.get().addScreenCaptureFromPath("Screenshots/" + destFile.getName(), testName);
+                } catch (Exception e) {
+                    logger.error("Error Screenshots", e);
+                }
+            }
             extentTest.get().log(Status.PASS, testName + " got successfully executed");
             logger.info(AnsiColorUtils.applyGreen("test passed: " + testName));
         }
@@ -73,16 +87,18 @@ public class MyListeners extends BaseTest implements ITestListener {
                 }
             }
             String testName = result.getMethod().getMethodName();
+            String testStatus = result.getStatus() == 1 ? "PASSED" : "FAILED";
+            String testTimeOut = String.valueOf(result.getEndMillis());
             String testNameScreen = result.getMethod().getMethodName() + result.getTestContext().getCurrentXmlTest().getParameter("browser");
             String deviceName = result.getMethod().getMethodName() + result.getTestContext().getCurrentXmlTest().getParameter("deviceName");
             if (getDriver() != null) {
                 try {
                     File screenshot = ((TakesScreenshot) getDriver()).getScreenshotAs(OutputType.FILE);
-                    File destFile = new File(System.getProperty("user.dir") + "/ExtentReports/Screenshots/" + testNameScreen + deviceName +".png");
+                    File destFile = new File(System.getProperty("user.dir") + "/ExtentReports/Screenshots/"+testStatus+"_"+ testTimeOut+"_"+testNameScreen +"_"+ JavaUtility.replaceSpaces(deviceName)+".png");
                     FileUtils.copyFile(screenshot, destFile);
-                    extentTest.get().addScreenCaptureFromPath("Screenshots/" + destFile.getName(), testName);
+                    extentTest.get().addScreenCaptureFromPath("Screenshots/"+ destFile.getName(), testName);
                 } catch (Exception e) {
-                    logger.error("Error al agregar captura de pantalla al informe", e);
+                    logger.error("Error Screenshots", e);
                 }
             }
             extentTest.get().log(Status.FAIL, testName + " test failed");
@@ -107,18 +123,12 @@ public class MyListeners extends BaseTest implements ITestListener {
             if (result.getMethod().getRetryAnalyzer(result) != null) {
                 MyRetryAnalyzer retryAnalyzer = (MyRetryAnalyzer) result.getMethod().getRetryAnalyzer(result);
                 if (retryAnalyzer.retry(result)) {
-                    return; // No registrar el test como omitido si se va a reintentar
+                    return;
                 }
-            } String testName = result.getMethod().getMethodName();
+            }
+            String testName = result.getMethod().getMethodName();
             extentTest.get().log(Status.SKIP, testName + " test skipped");
             extentTest.get().skip(result.getThrowable());
             logger.warn(AnsiColorUtils.applyYellow("test skipped: " + testName + "\n" + result.getThrowable()));
         }
-
-    protected String takesScreenshot(String testName, WebDriver driver) throws Exception {
-        File sourceFile = ((TakesScreenshot) driver).getScreenshotAs(OutputType.FILE);
-        File destFile = new File(System.getProperty("user.dir") + "/ExtentReports/Screenshots/" + testName + ".png");
-        FileUtils.copyFile(sourceFile, destFile);
-        return "Screenshots/" + destFile.getName();
-    }
     }
