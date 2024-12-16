@@ -1,0 +1,46 @@
+{
+  "devices": [
+    {
+      "type": "MOBILE",
+      "name": "Pixel 2",
+      "width": 375,
+      "height": 667,
+      "firefoxUserAgent": "Mozilla/5.0 (Linux; Android 8.0.0; Pixel 2) Gecko/20100101 Firefox/68.0"
+    },
+    {
+      "type": "MOBILE",
+      "name": "Samsung S10",
+      "width": 360,
+      "height": 740,
+      "firefoxUserAgent": "Mozilla/5.0 (Linux; Android 11; SAMSUNG SM-G973U) AppleWebKit/537.36 (KHTML, like Gecko) SamsungBrowser/14.2 Chrome/87.0.4280.141 Mobile Safari/537.36"
+    },
+    {
+      "type": "MOBILE",
+      "name": "iPhone 12",
+      "width": 390,
+      "height": 844,
+      "firefoxUserAgent": "Mozilla/5.0 (iPhone; CPU iPhone OS 14_6 like Mac OS X) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/14.0.3 Mobile/15E148 Safari/604.1"
+    },
+    {
+      "type": "TABLET",
+      "name": "iPad",
+      "width": 768,
+      "height": 1024,
+      "firefoxUserAgent": "Mozilla/5.0 (iPad; CPU OS 14_7_1 like Mac OS X) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/14.1.2 Mobile/15E148 Safari/604.1"
+    },
+    {
+      "type": "TABLET",
+      "name": "Samsung Tab S8",
+      "width": 800,
+      "height": 1280,
+      "firefoxUserAgent": "Mozilla/5.0 (Linux; Android 6.0.1; Nexus 10 Build/MOB31T) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/67.0.3396.87 Safari/537.36"
+    },
+    {
+      "type": "DESKTOP",
+      "name": "Nest Hub Max",
+      "width": 1920,
+      "height": 1080,
+      "firefoxUserAgent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) Gecko/20100101 Firefox/68.0"
+    }
+  ]
+}

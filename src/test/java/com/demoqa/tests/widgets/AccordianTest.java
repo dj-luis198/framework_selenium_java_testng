@@ -1,22 +1,21 @@
-package com.demoqa.tests.home;
+package com.demoqa.tests.widgets;
 
 import com.demoqa.base.BaseTest;
 import org.testng.Assert;
-import org.testng.annotations.*;
+import org.testng.annotations.Test;
 
-public class HomeTest extends BaseTest {
-
+public class AccordianTest extends BaseTest {
     @Test
-    public void homeTest() {
-        getDriver().get("https://demoqa.com/");
+    public void accordianTest() {
+        getDriver().get("https://demoqa.com/accordian");
         String title = getDriver().getTitle();
         System.out.println(title);
         Assert.assertTrue(true);
     }
 
     @Test
-    public void homeTest2() {
-        getDriver().get("https://demoqa.com/radio-button");
+    public void accordianTest2() {
+        getDriver().get("https://demoqa.com/auto-complete");
         String url = getDriver().getCurrentUrl();
         System.out.println(url);
         Assert.fail();
