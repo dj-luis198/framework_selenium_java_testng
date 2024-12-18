@@ -1,6 +1,8 @@
 package com.demoqa.tests.buttons;
 
 import com.demoqa.base.BaseTest;
+import com.demoqa.pages.butons.ButtonsPage;
+import com.demoqa.pages.home.HomePage;
 import org.testng.Assert;
 import org.testng.annotations.*;
 
@@ -8,10 +10,12 @@ public class ButtonTest extends BaseTest {
 
     @Test
     public void buttonsTest() {
-        getDriver().get("https://demoqa.com/text-box");
-        String title = getDriver().getTitle();
-        System.out.println(title);
-        Assert.assertTrue(true);
+        getDriver().get("https://demoqa.com");
+        HomePage homePage = new HomePage(getDriver());
+        homePage.clickCardElements();
+        ButtonsPage buttonPage = homePage.clickMenuListButtons();
+        String title=buttonPage.getTitlePage();
+        Assert.assertEquals(title,"DEMOQA");
     }
 
     @Test

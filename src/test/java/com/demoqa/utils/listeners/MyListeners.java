@@ -12,6 +12,7 @@ import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.openqa.selenium.OutputType;
 import org.openqa.selenium.TakesScreenshot;
+import org.openqa.selenium.WebDriver;
 import org.testng.ITestContext;
 import org.testng.ITestListener;
 import org.testng.ITestResult;
@@ -21,6 +22,7 @@ import java.io.File;
 public class MyListeners extends BaseTest implements ITestListener {
 
         private final Logger logger = LogManager.getLogger(MyListeners.class);
+        private final ThreadLocal<WebDriver> driver = new ThreadLocal<>();
 
         ExtentReports report = ExtentReportGenerator.getExtentReport();
         private final ThreadLocal<ExtentTest> extentTest = new ThreadLocal<>();
@@ -29,6 +31,8 @@ public class MyListeners extends BaseTest implements ITestListener {
 
         @Override
         public void onTestStart(ITestResult result) {
+            WebDriver webDriver = getDriver();
+            driver.set(webDriver);
             String browser = result.getTestContext().getCurrentXmlTest().getParameter("browser");
             String testName = result.getMethod().getMethodName();
             String device = System.getProperty("os.name") + "-" + System.getProperty("os.version") + "-"
@@ -66,13 +70,6 @@ public class MyListeners extends BaseTest implements ITestListener {
 
         @Override
         public void onTestFailure(ITestResult result) {
-            if (result.getMethod().getRetryAnalyzer(result) != null) {
-                MyRetryAnalyzer retryAnalyzer = (MyRetryAnalyzer) result.getMethod().getRetryAnalyzer(result);
-                if (retryAnalyzer.retry(result)) {
-                    logger.warn(AnsiColorUtils.applyYellow("Retrying test: " + result.getMethod().getMethodName()));
-                    return;
-                }
-            }
             String testName = result.getMethod().getMethodName();
             takeScreenshot(result, testName);
             extentTest.get().log(Status.FAIL, testName + " test failed");
@@ -94,12 +91,6 @@ public class MyListeners extends BaseTest implements ITestListener {
 
         @Override
         public void onTestSkipped(ITestResult result) {
-            if (result.getMethod().getRetryAnalyzer(result) != null) {
-                MyRetryAnalyzer retryAnalyzer = (MyRetryAnalyzer) result.getMethod().getRetryAnalyzer(result);
-                if (retryAnalyzer.retry(result)) {
-                    return;
-                }
-            }
             String testName = result.getMethod().getMethodName();
             extentTest.get().log(Status.SKIP, testName + " test skipped");
             extentTest.get().skip(result.getThrowable());
@@ -111,9 +102,9 @@ public class MyListeners extends BaseTest implements ITestListener {
             String testTimeOut = String.valueOf(result.getEndMillis());
             String testNameScreen = result.getMethod().getMethodName() + result.getTestContext().getCurrentXmlTest().getParameter("browser");
             String deviceName = result.getMethod().getMethodName() + result.getTestContext().getCurrentXmlTest().getParameter("deviceName");
-            if (getDriver() != null) {
+            if (driver.get() != null) {
                 try {
-                    File screenshot = ((TakesScreenshot) getDriver()).getScreenshotAs(OutputType.FILE);
+                    File screenshot = ((TakesScreenshot) driver.get()).getScreenshotAs(OutputType.FILE);
                     File destFile = new File(System.getProperty("user.dir") + "/ExtentReports/Screenshots/"+testStatus+"_"+ testTimeOut+"_"+testNameScreen +"_"+ JavaUtility.replaceSpaces(deviceName)+".png");
                     FileUtils.copyFile(screenshot, destFile);
                     extentTest.get().addScreenCaptureFromPath("Screenshots/"+ destFile.getName(), testName);

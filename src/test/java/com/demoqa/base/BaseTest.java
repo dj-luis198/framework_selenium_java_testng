@@ -11,7 +11,7 @@ import org.testng.annotations.Parameters;
 import java.time.Duration;
 
 public class BaseTest {
-    BrowserFactory browserFactory = new BrowserFactory();
+    static BrowserFactory browserFactory = new BrowserFactory();
     @BeforeMethod
     @Parameters({"browser", "deviceName"})
     public void setUp(@Optional("chrome") String browser,
@@ -25,7 +25,7 @@ public class BaseTest {
         browserFactory.quitDriver();
     }
 
-    protected WebDriver getDriver() {
+    public static WebDriver getDriver() {
         return browserFactory.getDriver();
     }
 }
