@@ -114,10 +114,12 @@ public class BrowserFactory {
     private void configureChromeOptions(ChromeOptions options, Device device) {
         options.setExperimentalOption("mobileEmulation", Map.of("deviceName", device.getName()));
         options.addArguments("--window-size=" + device.getWidth() + "," + device.getHeight());
+        options.addArguments("--force-device-scale-factor=0.75");
     }
 
     private void configureFirefoxOptions(FirefoxOptions options, Device device) {
         options.addPreference("general.useragent.override", device.getFirefoxUserAgent());
+        options.addPreference("layout.css.devPixelsPerPx", "0.75");
     }
 
     private void configureDimensions( WebDriver driver, Device device) {
