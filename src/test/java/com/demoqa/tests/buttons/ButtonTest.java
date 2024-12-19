@@ -11,7 +11,7 @@ public class ButtonTest extends BaseTest {
     @Test
     public void buttonsTest() {
         getDriver().get("https://demoqa.com");
-        HomePage homePage = new HomePage(getDriver());
+        HomePage homePage = new HomePage();
         homePage.clickCardElements();
         ButtonsPage buttonPage = homePage.clickMenuListButtons();
         String title=buttonPage.getTitlePage();

@@ -12,4 +12,12 @@ public class FormsTest extends BaseTest {
         System.out.println(title);
         Assert.assertTrue(true);
     }
+
+    @Test
+    public void formsTests() {
+        getDriver().get("https://demoqa.com/automation-practice-form");
+        String title = getDriver().getTitle();
+        System.out.println(title);
+        Assert.assertTrue(true);
+    }
 }

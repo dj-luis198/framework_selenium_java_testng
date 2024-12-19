@@ -20,7 +20,7 @@ import java.util.Map;
 
 public class BrowserFactory {
 
-    private final ThreadLocal<WebDriver> driver = new ThreadLocal<>();
+    private static final ThreadLocal<WebDriver> driver = new ThreadLocal<>();
     private static final Logger logger = LogManager.getLogger(BrowserFactory.class);
 
     private static final PropertyUtility prop = new PropertyUtility();
@@ -28,15 +28,15 @@ public class BrowserFactory {
     private static final String DEVICES_FILE = prop.initProperties("paths").getProperty("devices.file");
     private static final String RUN_LOCAL = prop.initProperties("general").getProperty("run.local");
 
-    public WebDriver getDriver() {
+    public static WebDriver getDriver() {
         return driver.get();
     }
 
-    public void setDriver(WebDriver webDriver) {
+    public static void setDriver(WebDriver webDriver) {
         driver.set(webDriver);
     }
 
-    public void quitDriver() {
+    public static void quitDriver() {
         try {
             WebDriver webDriver = driver.get();
             if (webDriver != null) {
@@ -47,7 +47,7 @@ public class BrowserFactory {
         }
     }
 
-    public WebDriver getDriver(String browser, String deviceName) {
+    public static WebDriver getDriver(String browser, String deviceName) {
         try {
             Device device = getDevice(deviceName);
             if (RUN_LOCAL != null && RUN_LOCAL.equals("true")) {
@@ -60,12 +60,12 @@ public class BrowserFactory {
         }
     }
 
-    private Device getDevice(String deviceName) {
+    private static Device getDevice(String deviceName) {
         JsonReader jsonReader = new JsonReader(DEVICES_FILE);
         return jsonReader.getDevice(deviceName);
     }
 
-    private WebDriver createRemoteDriver(String browser, Device device) throws MalformedURLException {
+    private static WebDriver createRemoteDriver(String browser, Device device) throws MalformedURLException {
         switch (browser) {
             case "chrome":
                 setDriver(createChromeDriver(device));
@@ -80,7 +80,7 @@ public class BrowserFactory {
         return getDriver();
     }
 
-    private WebDriver createLocalDriver(String browser, Device device) {
+    private static WebDriver createLocalDriver(String browser, Device device) {
         switch (browser) {
             case "chrome":
                 ChromeOptions ChromeOptions = new ChromeOptions();
@@ -99,30 +99,30 @@ public class BrowserFactory {
         return getDriver();
     }
 
-    private WebDriver createChromeDriver(Device device) throws MalformedURLException {
+    private static WebDriver createChromeDriver(Device device) throws MalformedURLException {
         ChromeOptions options = new ChromeOptions();
         configureChromeOptions(options, device);
         return new RemoteWebDriver(new URL(HUB_URL), options);
     }
 
-    private WebDriver createFirefoxDriver(Device device) throws MalformedURLException {
+    private static WebDriver createFirefoxDriver(Device device) throws MalformedURLException {
         FirefoxOptions options = new FirefoxOptions();
         configureFirefoxOptions(options, device);
         return new RemoteWebDriver(new URL(HUB_URL), options);
     }
 
-    private void configureChromeOptions(ChromeOptions options, Device device) {
+    private static void configureChromeOptions(ChromeOptions options, Device device) {
         options.setExperimentalOption("mobileEmulation", Map.of("deviceName", device.getName()));
         options.addArguments("--window-size=" + device.getWidth() + "," + device.getHeight());
         options.addArguments("--force-device-scale-factor=0.75");
     }
 
-    private void configureFirefoxOptions(FirefoxOptions options, Device device) {
+    private static void configureFirefoxOptions(FirefoxOptions options, Device device) {
         options.addPreference("general.useragent.override", device.getFirefoxUserAgent());
         options.addPreference("layout.css.devPixelsPerPx", "0.75");
     }
 
-    private void configureDimensions( WebDriver driver, Device device) {
+    private static void configureDimensions(WebDriver driver, Device device) {
         driver.manage().window().setSize(new Dimension(device.getWidth(), device.getHeight()));
     }
 }
