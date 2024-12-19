@@ -12,11 +12,14 @@ import org.openqa.selenium.chrome.ChromeOptions;
 import org.openqa.selenium.firefox.FirefoxDriver;
 import org.openqa.selenium.firefox.FirefoxOptions;
 import org.openqa.selenium.remote.RemoteWebDriver;
+import org.openqa.selenium.support.ThreadGuard;
 
 import java.net.MalformedURLException;
 import java.net.URL;
 import java.util.Map;
 
+//ThreadLocal para que cada thread tenga su propio driver
+//ThreadGuard para que aseguremos que el controlador solo sea llamado por el hilo que lo creo.
 
 public class BrowserFactory {
 
@@ -85,12 +88,12 @@ public class BrowserFactory {
             case "chrome":
                 ChromeOptions ChromeOptions = new ChromeOptions();
                 configureChromeOptions(ChromeOptions, device);
-                setDriver(new ChromeDriver(ChromeOptions));
+                setDriver(ThreadGuard.protect(new ChromeDriver(ChromeOptions)));
                 break;
             case "firefox":
                 FirefoxOptions fireOptions = new FirefoxOptions();
                 configureFirefoxOptions(fireOptions,device);
-                setDriver(new FirefoxDriver(fireOptions));
+                setDriver(ThreadGuard.protect(new FirefoxDriver(fireOptions)));
                 configureDimensions(getDriver(), device);
                 break;
             default:
@@ -120,6 +123,7 @@ public class BrowserFactory {
     private static void configureFirefoxOptions(FirefoxOptions options, Device device) {
         options.addPreference("general.useragent.override", device.getFirefoxUserAgent());
         options.addPreference("layout.css.devPixelsPerPx", "0.75");
+
     }
 
     private static void configureDimensions(WebDriver driver, Device device) {
