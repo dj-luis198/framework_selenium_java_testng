@@ -16,6 +16,7 @@ import org.openqa.selenium.support.ThreadGuard;
 
 import java.net.MalformedURLException;
 import java.net.URL;
+import java.util.HashMap;
 import java.util.Map;
 
 //ThreadLocal para que cada thread tenga su propio driver

@@ -5,12 +5,12 @@ import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 
 public class JSExecutor {
-    private final Waits wait;
+    private final WaitActions wait;
     private final JavascriptExecutor jse;
 
     public JSExecutor(WebDriver driver) {
         this.jse = (JavascriptExecutor) driver;
-        this.wait = new Waits(driver);
+        this.wait = new WaitActions(driver);
     }
 
     protected void clickJS(WebElement element) {
@@ -50,5 +50,10 @@ public class JSExecutor {
     protected void contextClick(WebElement element) {
         wait.elementToBeClickable(element);
         jse.executeScript("arguments[0].dispatchEvent(new MouseEvent('contextmenu', {'view': window, 'bubbles': true, 'cancelable': true}))", element);
+    }
+    //permite escribir en un campo de texto
+    protected void sendKeys(WebElement element, String text) {
+        wait.elementToBeClickable(element);
+        jse.executeScript("arguments[0].value = '" + text + "';", element);
     }
 }

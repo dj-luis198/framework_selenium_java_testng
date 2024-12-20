@@ -5,7 +5,16 @@ public class Device {
     private String name;
     private int width;
     private int height;
+    private boolean mobile;
     private String firefoxUserAgent;
+
+    public boolean isMobile() {
+        return mobile;
+    }
+
+    public void setMobile(boolean mobile) {
+        this.mobile = mobile;
+    }
 
     public String getType() {
         return type;

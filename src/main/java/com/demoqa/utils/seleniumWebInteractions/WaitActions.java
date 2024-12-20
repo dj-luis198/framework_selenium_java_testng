@@ -10,11 +10,11 @@ import org.openqa.selenium.support.ui.WebDriverWait;
 import java.time.Duration;
 import java.util.List;
 
-public class Waits {
-    private final Logger logger = LogManager.getLogger(Waits.class);
+public class WaitActions {
+    private final Logger logger = LogManager.getLogger(WaitActions.class);
     private final WebDriverWait webDriverWait;
 
-    public Waits(WebDriver driver) {
+    public WaitActions(WebDriver driver) {
         PropertyUtility prop = new PropertyUtility();
         long wait_Duration = Long.parseLong(prop.initProperties("general").getProperty("wait.duration"));
         this.webDriverWait = new WebDriverWait(driver, Duration.ofSeconds(wait_Duration));

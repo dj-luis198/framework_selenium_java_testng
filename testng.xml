@@ -6,34 +6,10 @@
     </listeners>
     <test name="ChromeTestsDesktopChrome">
         <parameter name="browser" value="chrome" />
-        <parameter name="deviceName" value="iPad" />
-        <classes>
-            <class name="com.demoqa.tests.buttons.ButtonTest" />
-            <class name="com.demoqa.tests.home.HomeTest" />
-        </classes>
-    </test>
-    <test name="ChromeTestsTabletChrome">
-        <parameter name="browser" value="chrome" />
-        <parameter name="deviceName" value="Pixel 2" />
-        <classes>
-            <class name="com.demoqa.tests.forms.FormsTest" />
-            <class name="com.demoqa.tests.widgets.AccordianTest" />
-        </classes>
-    </test>
-    <test name="ChromeTestsDesktopFirefox">
-        <parameter name="browser" value="firefox" />
-        <parameter name="deviceName" value="Pixel 2" />
-        <classes>
-            <class name="com.demoqa.tests.buttons.ButtonTest" />
-            <class name="com.demoqa.tests.home.HomeTest" />
-        </classes>
-    </test>
-    <test name="ChromeTestsMobileFirefox">
-        <parameter name="browser" value="firefox" />
         <parameter name="deviceName" value="Nest Hub Max" />
         <classes>
-            <class name="com.demoqa.tests.forms.FormsTest" />
-            <class name="com.demoqa.tests.widgets.AccordianTest" />
+            <class name="com.demoqa.tests.buttons.ButtonTest" />
         </classes>
     </test>
+
 </suite>

@@ -4,15 +4,32 @@ import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.interactions.Actions;
 
-public class SActions {
-    private final Actions actions;
-    private final Waits wait;
-    private final JSExecutor js;
+//Métodos para interactuar con elementos de la página:
+//click(WebElement element)
+//doubleClick(WebElement element)
+//sendKeys(WebElement element, String text)
+//clear(WebElement element)
+//isSelected(WebElement element)
+//isEnabled(WebElement element)
+//isVisible(WebElement element)
+//isDisplayed(WebElement element)
+//getCssValue(WebElement element, String propertyName)
+//getAttribute(WebElement element, String attributeName)
+//getTagName(WebElement element)
+//getText(WebElement element)
+//getRect(WebElement element)
+//getLocation(WebElement element)
+//getSize(WebElement element)
 
-    public SActions(WebDriver driver) {
-        this.actions = new Actions(driver);
-        this.wait = new Waits(driver);
+public class ElementActions {
+    private final JSExecutor js;
+    private final Actions actions;
+    private final WaitActions wait;
+
+    public ElementActions(WebDriver driver) {
         this.js = new JSExecutor(driver);
+        this.actions = new Actions(driver);
+        this.wait = new WaitActions(driver);
     }
 
     public WebElement scrollToElement(WebElement element){
@@ -29,6 +46,19 @@ public class SActions {
         }
     }
 
+    public void click (WebElement element){
+        try {
+            scrollToElement(element).click();
+        } catch (Exception e) {
+            try {
+                js.scrollToElement(element);
+                js.clickJS(element);
+            } catch (Exception ex) {
+                throw new RuntimeException(ex);
+            }
+        }
+    }
+
     public void doubleClick(WebElement element){
         try {
             actions.doubleClick(scrollToElement(element)).perform();
@@ -36,19 +66,6 @@ public class SActions {
             try {
                 js.scrollToElement(element);
                 js.doubleClick(element);
-            } catch (Exception ex) {
-                throw new RuntimeException(ex);
-            }
-        }
-    }
-
-    public void click(WebElement element){
-        try {
-            actions.click(scrollToElement(element)).perform();
-        } catch (Exception e) {
-            try {
-                js.scrollToElement(element);
-                js.clickJS(element);
             } catch (Exception ex) {
                 throw new RuntimeException(ex);
             }
@@ -73,6 +90,21 @@ public class SActions {
             actions.moveToElement(scrollToElement(element)).perform();
         } catch (Exception e) {
             throw new RuntimeException(e);
+        }
+    }
+
+    protected void clearAndSendKeys (WebElement element, String text){
+        try {
+            scrollToElement(element).clear();
+            element.sendKeys(text);
+        } catch (Exception e) {
+            try {
+                js.scrollToElement(element);
+                js.clearInputValue(element);
+                js.sendKeys(element, text);
+            } catch (Exception ex) {
+                throw new RuntimeException(ex);
+            }
         }
     }
 }
