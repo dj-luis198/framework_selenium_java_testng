@@ -109,4 +109,23 @@ public class WaitActions {
             throw new Error();
         }
     }
+
+    public void numberOfWindowsToBe() {
+        try {
+            webDriverWait.until(ExpectedConditions.numberOfWindowsToBe(2));
+        } catch (TimeoutException | NoSuchWindowException e) {
+            logger.error("Timeout Exception or No Such Element Exception", e);
+            throw new Error();
+        }
+    }
+
+    public Alert alertIsPresent() {
+        try {
+            return webDriverWait.until(ExpectedConditions.alertIsPresent());
+        } catch (TimeoutException e) {
+            logger.error("Timeout Exception or No Such alert Exception", e);
+            throw new Error();
+        }
+    }
+
 }
