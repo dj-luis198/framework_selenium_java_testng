@@ -1,10 +1,10 @@
 package com.demoqa.tests.home;
 
-import com.demoqa.base.BaseTest;
+import com.demoqa.base.Base;
 import org.testng.Assert;
 import org.testng.annotations.*;
 
-public class HomeTest extends BaseTest {
+public class HomeTest extends Base {
 
     @Test
     public void homeTest() {

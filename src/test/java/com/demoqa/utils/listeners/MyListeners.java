@@ -3,10 +3,10 @@ package com.demoqa.utils.listeners;
 import com.aventstack.extentreports.ExtentReports;
 import com.aventstack.extentreports.ExtentTest;
 import com.aventstack.extentreports.Status;
-import com.demoqa.base.BaseTest;
-import com.demoqa.utils.extentReport.ExtentReportGenerator;
-import com.demoqa.utils.javaUtility.JavaUtility;
-import com.demoqa.utils.logsUtility.AnsiColorUtils;
+import com.demoqa.base.Base;
+import com.demoqa.utils.extent_report.ExtentReportGenerator;
+import com.demoqa.utils.java_utility.JavaUtility;
+import com.demoqa.utils.logs_utility.AnsiColorUtils;
 import org.apache.commons.io.FileUtils;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -18,11 +18,8 @@ import org.testng.ITestListener;
 import org.testng.ITestResult;
 
 import java.io.File;
-import java.io.IOException;
-import java.time.LocalDateTime;
-import java.time.format.DateTimeFormatter;
 
-public class MyListeners extends BaseTest implements ITestListener {
+public class MyListeners extends Base implements ITestListener {
 
         private final Logger logger = LogManager.getLogger(MyListeners.class);
         private final ThreadLocal<WebDriver> driver = new ThreadLocal<>();

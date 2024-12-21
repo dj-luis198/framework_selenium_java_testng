@@ -1,14 +1,13 @@
 package com.demoqa.pages.butons;
 
 import com.demoqa.pages.ads.Ads;
-import com.demoqa.utils.seleniumWebInteractions.ElementActions;
+import com.demoqa.utils.web_interactions.ElementActions;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;
 
 public class ButtonsPage {
-    private final WebDriver driver;
     private final ElementActions elementActions;
 
     @FindBy(id="doubleClickBtn")
@@ -20,13 +19,12 @@ public class ButtonsPage {
 
     public ButtonsPage(WebDriver driver) {
         PageFactory.initElements(driver,this);
-        this.driver = driver;
         elementActions = new ElementActions(driver);
         Ads ads = new Ads(driver);
         ads.removeAds();
     }
 
-    public void clickDoubleClickButton() throws InterruptedException {
+    public void clickDoubleClickButton(){
         elementActions.doubleClick(doubleClickButton);
     }
 

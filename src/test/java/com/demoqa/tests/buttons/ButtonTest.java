@@ -1,12 +1,12 @@
 package com.demoqa.tests.buttons;
 
-import com.demoqa.base.BaseTest;
+import com.demoqa.base.Base;
 import com.demoqa.pages.butons.ButtonsPage;
 import com.demoqa.pages.home.HomePage;
 import org.testng.Assert;
 import org.testng.annotations.*;
 
-public class ButtonTest extends BaseTest {
+public class ButtonTest extends Base {
 
     @Test
     public void buttonsTest() throws InterruptedException {

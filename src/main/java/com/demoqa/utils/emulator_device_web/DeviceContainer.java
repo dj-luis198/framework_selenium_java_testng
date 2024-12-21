@@ -1,4 +1,4 @@
-package com.demoqa.utils.emulatorDeviceWeb;
+package com.demoqa.utils.emulator_device_web;
 
 import java.util.List;
 

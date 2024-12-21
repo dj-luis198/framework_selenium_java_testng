@@ -1,4 +1,4 @@
-package com.demoqa.utils.extentReport;
+package com.demoqa.utils.extent_report;
 
 import com.aventstack.extentreports.ExtentReports;
 import com.aventstack.extentreports.reporter.ExtentSparkReporter;
@@ -9,7 +9,10 @@ import java.io.File;
 public class ExtentReportGenerator {
         static ExtentReports report;
 
-        public static ExtentReports getExtentReport(){
+    private ExtentReportGenerator() {
+    }
+
+    public static ExtentReports getExtentReport(){
             report = new ExtentReports();
             File extentReportFile= new File(System.getProperty("user.dir")+"/ExtentReports/index.html");
             ExtentSparkReporter sparkReporter = new ExtentSparkReporter(extentReportFile);

@@ -1,4 +1,4 @@
-package com.demoqa.utils.seleniumWebInteractions;
+package com.demoqa.utils.web_interactions;
 
 import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.WebDriver;
@@ -14,13 +14,11 @@ public class JSExecutor {
     }
 
     protected void clickJS(WebElement element) {
-        wait.elementToBeClickable(element);
-        jse.executeScript("arguments[0].click();", element);
+        jse.executeScript("arguments[0].click();", wait.elementToBeClickable(element));
     }
 
     protected void scrollToElement(WebElement element) {
-        wait.visible(element);
-        jse.executeScript("arguments[0].scrollIntoView();", element);
+        jse.executeScript("arguments[0].scrollIntoView();", wait.visible(element));
     }
 
     protected void scrollToTop() {
@@ -32,8 +30,7 @@ public class JSExecutor {
     }
 
     protected void clearInputValue(WebElement element) {
-        wait.visible(element);
-        jse.executeScript("arguments[0].value = '';", element);
+        jse.executeScript("arguments[0].value = '';", wait.visible(element));
     }
 
     protected void dismissAlert() {
@@ -42,18 +39,23 @@ public class JSExecutor {
 
 
     protected void doubleClick(WebElement element) {
-        wait.elementToBeClickable(element);
-        jse.executeScript("arguments[0].dispatchEvent(new MouseEvent('dblclick', {'view': window, 'bubbles': true, 'cancelable': true}))", element);
+        jse.executeScript("arguments[0].dispatchEvent(new MouseEvent('dblclick', {" +
+                "'view': window, " +
+                "'bubbles': true, " +
+                "'cancelable': true}))",
+                wait.elementToBeClickable(element));
     }
 
 
     protected void contextClick(WebElement element) {
-        wait.elementToBeClickable(element);
-        jse.executeScript("arguments[0].dispatchEvent(new MouseEvent('contextmenu', {'view': window, 'bubbles': true, 'cancelable': true}))", element);
+        jse.executeScript("arguments[0].dispatchEvent(new MouseEvent('contextmenu', {" +
+                "'view': window, " +
+                "'bubbles': true, " +
+                "'cancelable': true}))",
+                wait.elementToBeClickable(element));
     }
 
     protected void sendKeys(WebElement element, String text) {
-        wait.elementToBeClickable(element);
-        jse.executeScript("arguments[0].value = '" + text + "';", element);
+        jse.executeScript("arguments[0].value = '" + text + "';", wait.elementToBeClickable(element));
     }
 }

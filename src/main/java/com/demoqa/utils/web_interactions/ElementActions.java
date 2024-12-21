@@ -1,9 +1,7 @@
-package com.demoqa.utils.seleniumWebInteractions;
+package com.demoqa.utils.web_interactions;
 
-import com.demoqa.utils.enums.Properties;
-import org.openqa.selenium.By;
-import org.openqa.selenium.WebDriver;
-import org.openqa.selenium.WebElement;
+import com.demoqa.utils.exceptions.ElementException;
+import org.openqa.selenium.*;
 import org.openqa.selenium.interactions.Actions;
 
 //Métodos para interactuar con elementos de la página:
@@ -24,6 +22,7 @@ import org.openqa.selenium.interactions.Actions;
 //getSize(WebElement element)
 
 public class ElementActions {
+    private static final String ERRORMESSAGECLICK = "it is not possible to click on the element";
     private final JSExecutor js;
     private final Actions actions;
     private final WaitActions wait;
@@ -43,7 +42,7 @@ public class ElementActions {
                 js.scrollToElement(element);
                 return element;
             } catch (Exception ex) {
-                throw new RuntimeException(ex);
+                throw new ElementException(ERRORMESSAGECLICK,ex);
             }
         }
     }
@@ -51,12 +50,12 @@ public class ElementActions {
     public void click (WebElement element){
         try {
             scrollToElement(element).click();
-        } catch (Exception e) {
+        } catch (ElementNotInteractableException e) {
             try {
                 js.scrollToElement(element);
                 js.clickJS(element);
-            } catch (Exception ex) {
-                throw new RuntimeException(ex);
+            } catch (ElementNotInteractableException | JavascriptException ex) {
+                throw new ElementException(ERRORMESSAGECLICK,ex);
             }
         }
     }
@@ -69,7 +68,7 @@ public class ElementActions {
                 js.scrollToElement(element);
                 js.doubleClick(element);
             } catch (Exception ex) {
-                throw new RuntimeException(ex);
+                throw new ElementException(ERRORMESSAGECLICK,ex);
             }
         }
     }
@@ -82,7 +81,7 @@ public class ElementActions {
                 js.scrollToElement(element);
                 js.contextClick(scrollToElement(element));
             } catch (Exception ex) {
-                throw new RuntimeException(ex);
+                throw new ElementException(ERRORMESSAGECLICK,ex);
             }
         }
     }
@@ -91,7 +90,7 @@ public class ElementActions {
         try {
             actions.moveToElement(scrollToElement(element)).perform();
         } catch (Exception e) {
-            throw new RuntimeException(e);
+            throw new ElementException("it is not possible to move to element",e);
         }
     }
 
@@ -105,12 +104,12 @@ public class ElementActions {
                 js.clearInputValue(element);
                 js.sendKeys(element, text);
             } catch (Exception ex) {
-                throw new RuntimeException(ex);
+                throw new ElementException("it is not possible clear and send keys",ex);
             }
         }
     }
 
-    public void SendKeys (WebElement element, String text){
+    public void sendKeys (WebElement element, String text){
         try {
             scrollToElement(element).sendKeys(text);
         } catch (Exception e) {
@@ -118,17 +117,13 @@ public class ElementActions {
                 js.scrollToElement(element);
                 js.sendKeys(element, text);
             } catch (Exception ex) {
-                throw new RuntimeException(ex);
+                throw new ElementException("it is not possible send keys",ex);
             }
         }
     }
 
     public void getText (WebElement element){
-        try {
             wait.visible(element).getText();
-        } catch (Exception e) {
-                throw new RuntimeException(e);
-            }
     }
 
     public String getDomProperty(WebElement element, String propertyName){

@@ -1,4 +1,4 @@
-package com.demoqa.utils.externalFileUtility;
+package com.demoqa.utils.external_file_utility;
 
 import java.io.FileInputStream;
 import java.io.IOException;

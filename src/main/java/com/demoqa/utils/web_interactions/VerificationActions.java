@@ -1,4 +1,4 @@
-package com.demoqa.utils.seleniumWebInteractions;
+package com.demoqa.utils.web_interactions;
 
 
 //Métodos para verificar el estado de la página:
@@ -14,4 +14,7 @@ package com.demoqa.utils.seleniumWebInteractions;
 //verifyTextNotContains(WebElement element, String text)
 
 public class VerificationActions {
+    public void metodo() {
+
+    }
 }

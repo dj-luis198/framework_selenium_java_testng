@@ -1,4 +1,4 @@
-package com.demoqa.utils.seleniumWebInteractions;
+package com.demoqa.utils.web_interactions;
 
 //Métodos para interactuar con formularios:
 //fillForm(WebElement form, Map<String, String> data)
@@ -10,4 +10,7 @@ package com.demoqa.utils.seleniumWebInteractions;
 //getFormFieldValue(WebElement form, String fieldName)
 
 public class FormActions {
+    public void metodo() {
+
+    }
 }

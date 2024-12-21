@@ -1,8 +1,7 @@
-package com.demoqa.utils.seleniumWebInteractions;
+package com.demoqa.utils.web_interactions;
 
-import com.demoqa.utils.externalFileUtility.PropertyUtility;
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
+import com.demoqa.utils.exceptions.ElementException;
+import com.demoqa.utils.external_file_utility.PropertyUtility;
 import org.openqa.selenium.*;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
@@ -11,21 +10,20 @@ import java.time.Duration;
 import java.util.List;
 
 public class WaitActions {
-    private final Logger logger = LogManager.getLogger(WaitActions.class);
+    private static final String ERRORMESSAGE = "Timeout Exception or No Such Element Exception";
     private final WebDriverWait webDriverWait;
 
     public WaitActions(WebDriver driver) {
         PropertyUtility prop = new PropertyUtility();
-        long wait_Duration = Long.parseLong(prop.initProperties("general").getProperty("wait.duration"));
-        this.webDriverWait = new WebDriverWait(driver, Duration.ofSeconds(wait_Duration));
+        long waitDuration = Long.parseLong(prop.initProperties("general").getProperty("wait.duration"));
+        this.webDriverWait = new WebDriverWait(driver, Duration.ofSeconds(waitDuration));
     }
 
-    public WebElement presenceOfElementLocated(By located){
+    public WebElement presenceOfElementLocated(By located) {
         try {
             return webDriverWait.until(ExpectedConditions.presenceOfElementLocated(located));
         } catch (TimeoutException | NoSuchElementException e) {
-            logger.error("Timeout Exception or No Such Element Exception", e);
-            throw new Error();
+            throw new ElementException(ERRORMESSAGE,e);
         }
     }
 
@@ -33,8 +31,7 @@ public class WaitActions {
         try {
             return webDriverWait.until(ExpectedConditions.visibilityOf(element));
         } catch (TimeoutException | NoSuchElementException e) {
-            logger.error("Timeout Exception or No Such Element Exception", e);
-            throw new Error();
+            throw new ElementException(ERRORMESSAGE,e);
         }
     }
 
@@ -42,8 +39,7 @@ public class WaitActions {
         try {
             return webDriverWait.until(ExpectedConditions.invisibilityOf(element));
         } catch (TimeoutException | NoSuchElementException e) {
-            logger.error("Timeout Exception or No Such Element Exception", e);
-            throw new Error();
+            throw new ElementException(ERRORMESSAGE,e);
         }
     }
 
@@ -51,8 +47,7 @@ public class WaitActions {
         try {
             return webDriverWait.until(ExpectedConditions.elementToBeClickable(element));
         } catch (TimeoutException | NoSuchElementException e) {
-            logger.error("Timeout Exception or No Such Element Exception", e);
-            throw new Error();
+            throw new ElementException(ERRORMESSAGE,e);
         }
     }
 
@@ -60,8 +55,7 @@ public class WaitActions {
         try {
             return webDriverWait.until(ExpectedConditions.elementToBeSelected(element));
         } catch (TimeoutException | NoSuchElementException e) {
-            logger.error("Timeout Exception or No Such Element Exception", e);
-            throw new Error();
+            throw new ElementException(ERRORMESSAGE,e);
         }
     }
 
@@ -69,8 +63,7 @@ public class WaitActions {
         try {
             return webDriverWait.until(ExpectedConditions.textToBePresentInElement(element, text));
         } catch (TimeoutException | NoSuchElementException e) {
-            logger.error("Timeout Exception or No Such Element Exception", e);
-            throw new Error();
+            throw new ElementException(ERRORMESSAGE,e);
         }
     }
 
@@ -78,8 +71,7 @@ public class WaitActions {
         try {
             return webDriverWait.until(ExpectedConditions.titleContains(text));
         } catch (TimeoutException | NoSuchElementException e) {
-            logger.error("Timeout Exception or No Such Element Exception", e);
-            throw new Error();
+            throw new ElementException(ERRORMESSAGE,e);
         }
     }
 
@@ -87,8 +79,7 @@ public class WaitActions {
         try {
             return webDriverWait.until(ExpectedConditions.elementSelectionStateToBe(element, state));
         } catch (TimeoutException | NoSuchElementException e) {
-            logger.error("Timeout Exception or No Such Element Exception", e);
-            throw new Error();
+            throw new ElementException(ERRORMESSAGE,e);
         }
     }
 
@@ -96,8 +87,7 @@ public class WaitActions {
         try {
             return webDriverWait.until(ExpectedConditions.urlToBe(urlPage));
         } catch (TimeoutException | NoSuchElementException e) {
-            logger.error("Timeout Exception or No Such Element Exception", e);
-            throw new Error();
+            throw new ElementException(ERRORMESSAGE,e);
         }
     }
 
@@ -105,8 +95,7 @@ public class WaitActions {
         try {
             return webDriverWait.until(ExpectedConditions.presenceOfAllElementsLocatedBy(locator));
         } catch (TimeoutException | NoSuchElementException e) {
-            logger.error("Timeout Exception or No Such Element Exception", e);
-            throw new Error();
+            throw new ElementException(ERRORMESSAGE,e);
         }
     }
 
@@ -114,8 +103,7 @@ public class WaitActions {
         try {
             webDriverWait.until(ExpectedConditions.numberOfWindowsToBe(2));
         } catch (TimeoutException | NoSuchWindowException e) {
-            logger.error("Timeout Exception or No Such Element Exception", e);
-            throw new Error();
+            throw new ElementException("Timeout Exception or window exception",e);
         }
     }
 
@@ -123,9 +111,7 @@ public class WaitActions {
         try {
             return webDriverWait.until(ExpectedConditions.alertIsPresent());
         } catch (TimeoutException e) {
-            logger.error("Timeout Exception or No Such alert Exception", e);
-            throw new Error();
+            throw new ElementException("Alert no present",e);
         }
     }
-
 }

@@ -1,10 +1,10 @@
 package com.demoqa.tests.widgets;
 
-import com.demoqa.base.BaseTest;
+import com.demoqa.base.Base;
 import org.testng.Assert;
 import org.testng.annotations.Test;
 
-public class AccordianTest extends BaseTest {
+public class AccordianTest extends Base {
     @Test
     public void accordianTest() {
         getDriver().get("https://demoqa.com/accordian");
