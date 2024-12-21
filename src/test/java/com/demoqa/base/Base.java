@@ -13,6 +13,7 @@ public class Base {
     public void setUp(@Optional("chrome") String browser,
                        @Optional("Nest Hub Max") String deviceName) {
         WebDriver driver = BrowserFactory.getDriver(browser, deviceName);
+        driver.get("https://demoqa.com/");
         driver.manage().window().maximize();
     }
 

@@ -1,4 +1,4 @@
-package com.demoqa.pages.butons;
+package com.demoqa.pages;
 
 import com.demoqa.pages.ads.Ads;
 import com.demoqa.utils.web_interactions.ElementActions;
@@ -14,8 +14,14 @@ public class ButtonsPage {
     private WebElement doubleClickButton;
     @FindBy(id="rightClickBtn")
     private WebElement rightClickButton;
+    @FindBy(xpath = "(//button[normalize-space()='Click Me'])[1]")
+    private WebElement clickButton;
     @FindBy(id="dynamicClickMessage")
     private WebElement dynamicClickMessage;
+    @FindBy(id="doubleClickMessage")
+    private WebElement doubleClickMessage;
+    @FindBy(id="rightClickMessage")
+    private WebElement rightClickMessage;
 
     public ButtonsPage(WebDriver driver) {
         PageFactory.initElements(driver,this);
@@ -28,7 +34,23 @@ public class ButtonsPage {
         elementActions.doubleClick(doubleClickButton);
     }
 
-    public String getTitlePage(){
-        return "DEMOQA";
+    public void clickButton(){
+        elementActions.click(clickButton);
+    }
+
+    public void rightClickButton(){
+        elementActions.contextClick(rightClickButton);
+    }
+
+    public String getMessageDynamicClick(){
+        return elementActions.getText(dynamicClickMessage);
+    }
+
+    public String getMessageDoubleClick(){
+        return elementActions.getText(doubleClickMessage);
+    }
+
+    public String getMessageRightClick(){
+        return elementActions.getText(rightClickMessage);
     }
 }

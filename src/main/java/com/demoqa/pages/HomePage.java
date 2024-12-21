@@ -1,7 +1,6 @@
-package com.demoqa.pages.home;
+package com.demoqa.pages;
 
 import com.demoqa.pages.ads.Ads;
-import com.demoqa.pages.butons.ButtonsPage;
 import com.demoqa.utils.web_interactions.ElementActions;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
@@ -16,6 +15,8 @@ public class HomePage {
     private WebElement cardElements;
     @FindBy(xpath = "//span[normalize-space()='Buttons']")
     private WebElement menuListButtons;
+    @FindBy(xpath = "//span[normalize-space()='Text Box']")
+    private WebElement menuListTextBox;
 
     public HomePage(WebDriver driver) {
         PageFactory.initElements(driver,this);
@@ -32,5 +33,10 @@ public class HomePage {
     public ButtonsPage clickMenuListButtons(){
         elementActions.click(menuListButtons);
         return new ButtonsPage(driver);
+    }
+
+    public TextBoxPage clickMenuListTextBox(){
+        elementActions.click(menuListTextBox);
+        return new TextBoxPage(driver);
     }
 }

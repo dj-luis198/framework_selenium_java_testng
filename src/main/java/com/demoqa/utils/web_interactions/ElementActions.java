@@ -49,10 +49,9 @@ public class ElementActions {
 
     public void click (WebElement element){
         try {
-            scrollToElement(element).click();
+            wait.elementToBeClickable(element).click();
         } catch (ElementNotInteractableException e) {
             try {
-                js.scrollToElement(element);
                 js.clickJS(element);
             } catch (ElementNotInteractableException | JavascriptException ex) {
                 throw new ElementException(ERRORMESSAGECLICK,ex);
@@ -62,10 +61,9 @@ public class ElementActions {
 
     public void doubleClick(WebElement element){
         try {
-            actions.doubleClick(scrollToElement(element)).perform();
+            actions.doubleClick(wait.elementToBeClickable(element)).perform();
         } catch (Exception e) {
             try {
-                js.scrollToElement(element);
                 js.doubleClick(element);
             } catch (Exception ex) {
                 throw new ElementException(ERRORMESSAGECLICK,ex);
@@ -74,21 +72,16 @@ public class ElementActions {
     }
 
     public void contextClick(WebElement element){
-        try {
-            actions.contextClick(scrollToElement(element)).perform();
-        } catch (Exception e) {
             try {
-                js.scrollToElement(element);
-                js.contextClick(scrollToElement(element));
+                js.contextClick(element);
             } catch (Exception ex) {
                 throw new ElementException(ERRORMESSAGECLICK,ex);
             }
-        }
     }
 
     public void moveToElement(WebElement element){
         try {
-            actions.moveToElement(scrollToElement(element)).perform();
+            actions.moveToElement(wait.visible(element)).perform();
         } catch (Exception e) {
             throw new ElementException("it is not possible to move to element",e);
         }
@@ -96,11 +89,10 @@ public class ElementActions {
 
     public void clearAndSendKeys (WebElement element, String text){
         try {
-            scrollToElement(element).clear();
+            wait.visible(element).clear();
             element.sendKeys(text);
         } catch (Exception e) {
             try {
-                js.scrollToElement(element);
                 js.clearInputValue(element);
                 js.sendKeys(element, text);
             } catch (Exception ex) {
@@ -111,10 +103,9 @@ public class ElementActions {
 
     public void sendKeys (WebElement element, String text){
         try {
-            scrollToElement(element).sendKeys(text);
+            wait.visible(element).sendKeys(text);
         } catch (Exception e) {
             try {
-                js.scrollToElement(element);
                 js.sendKeys(element, text);
             } catch (Exception ex) {
                 throw new ElementException("it is not possible send keys",ex);
@@ -122,8 +113,8 @@ public class ElementActions {
         }
     }
 
-    public void getText (WebElement element){
-            wait.visible(element).getText();
+    public String getText (WebElement element){
+            return wait.visible(element).getText();
     }
 
     public String getDomProperty(WebElement element, String propertyName){

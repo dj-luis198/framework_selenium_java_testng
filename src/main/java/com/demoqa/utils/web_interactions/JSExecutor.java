@@ -56,6 +56,6 @@ public class JSExecutor {
     }
 
     protected void sendKeys(WebElement element, String text) {
-        jse.executeScript("arguments[0].value = '" + text + "';", wait.elementToBeClickable(element));
+        jse.executeScript("arguments[0].value = '" + text + "';", wait.visible(element));
     }
 }
