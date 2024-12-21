@@ -1,5 +1,7 @@
 package com.demoqa.utils.seleniumWebInteractions;
 
+import com.demoqa.utils.enums.Properties;
+import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.interactions.Actions;
@@ -93,7 +95,7 @@ public class ElementActions {
         }
     }
 
-    protected void clearAndSendKeys (WebElement element, String text){
+    public void clearAndSendKeys (WebElement element, String text){
         try {
             scrollToElement(element).clear();
             element.sendKeys(text);
@@ -106,5 +108,34 @@ public class ElementActions {
                 throw new RuntimeException(ex);
             }
         }
+    }
+
+    public void SendKeys (WebElement element, String text){
+        try {
+            scrollToElement(element).sendKeys(text);
+        } catch (Exception e) {
+            try {
+                js.scrollToElement(element);
+                js.sendKeys(element, text);
+            } catch (Exception ex) {
+                throw new RuntimeException(ex);
+            }
+        }
+    }
+
+    public void getText (WebElement element){
+        try {
+            wait.visible(element).getText();
+        } catch (Exception e) {
+                throw new RuntimeException(e);
+            }
+    }
+
+    public String getDomProperty(WebElement element, String propertyName){
+        return wait.visible(element).getDomProperty(propertyName);
+    }
+
+    public String getDomProperty(By locator, String propertyName){
+        return wait.presenceOfElementLocated(locator).getDomProperty(propertyName);
     }
 }
