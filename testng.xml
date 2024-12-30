@@ -14,4 +14,115 @@
             <class name="com.demoqa.tests.elements.CheckBoxTest" />
         </classes>
     </test>
+    <test name="ChromeTestsMobileChrome">
+        <parameter name="browser" value="chrome" />
+        <parameter name="deviceName" value="Pixel 2" />
+        <classes>
+            <class name="com.demoqa.tests.elements.TextBoxTest" />
+            <class name="com.demoqa.tests.elements.ButtonTest" />
+            <class name="com.demoqa.tests.elements.RadioButtonTest" />
+            <class name="com.demoqa.tests.elements.CheckBoxTest" />
+        </classes>
+    </test>
+    <test name="ChromeTestsMobileChrome">
+        <parameter name="browser" value="chrome" />
+        <parameter name="deviceName" value="Samsung S10" />
+        <classes>
+            <class name="com.demoqa.tests.elements.TextBoxTest" />
+            <class name="com.demoqa.tests.elements.ButtonTest" />
+            <class name="com.demoqa.tests.elements.RadioButtonTest" />
+            <class name="com.demoqa.tests.elements.CheckBoxTest" />
+        </classes>
+    </test>
+    <test name="ChromeTestsMobileChrome">
+        <parameter name="browser" value="chrome" />
+        <parameter name="deviceName" value="iPhone 12" />
+        <classes>
+            <class name="com.demoqa.tests.elements.TextBoxTest" />
+            <class name="com.demoqa.tests.elements.ButtonTest" />
+            <class name="com.demoqa.tests.elements.RadioButtonTest" />
+            <class name="com.demoqa.tests.elements.CheckBoxTest" />
+        </classes>
+    </test>
+    <test name="ChromeTestsTabletChrome">
+        <parameter name="browser" value="chrome" />
+        <parameter name="deviceName" value="iPad" />
+        <classes>
+            <class name="com.demoqa.tests.elements.TextBoxTest" />
+            <class name="com.demoqa.tests.elements.ButtonTest" />
+            <class name="com.demoqa.tests.elements.RadioButtonTest" />
+            <class name="com.demoqa.tests.elements.CheckBoxTest" />
+        </classes>
+    </test>
+    <test name="ChromeTestsTabletChrome">
+        <parameter name="browser" value="chrome" />
+        <parameter name="deviceName" value="Samsung Tab S8" />
+        <classes>
+            <class name="com.demoqa.tests.elements.TextBoxTest" />
+            <class name="com.demoqa.tests.elements.ButtonTest" />
+            <class name="com.demoqa.tests.elements.RadioButtonTest" />
+            <class name="com.demoqa.tests.elements.CheckBoxTest" />
+        </classes>
+    </test>
+
+    <test name="ChromeTestsDesktopFirefox">
+        <parameter name="browser" value="firefox" />
+        <parameter name="deviceName" value="Nest Hub Max" />
+        <classes>
+            <class name="com.demoqa.tests.elements.TextBoxTest" />
+            <class name="com.demoqa.tests.elements.ButtonTest" />
+            <class name="com.demoqa.tests.elements.RadioButtonTest" />
+            <class name="com.demoqa.tests.elements.CheckBoxTest" />
+        </classes>
+    </test>
+    <test name="ChromeTestsMobileFirefox">
+        <parameter name="browser" value="firefox" />
+        <parameter name="deviceName" value="Pixel 2" />
+        <classes>
+            <class name="com.demoqa.tests.elements.TextBoxTest" />
+            <class name="com.demoqa.tests.elements.ButtonTest" />
+            <class name="com.demoqa.tests.elements.RadioButtonTest" />
+            <class name="com.demoqa.tests.elements.CheckBoxTest" />
+        </classes>
+    </test>
+    <test name="ChromeTestsMobileFirefox">
+        <parameter name="browser" value="firefox" />
+        <parameter name="deviceName" value="Samsung S10" />
+        <classes>
+            <class name="com.demoqa.tests.elements.TextBoxTest" />
+            <class name="com.demoqa.tests.elements.ButtonTest" />
+            <class name="com.demoqa.tests.elements.RadioButtonTest" />
+            <class name="com.demoqa.tests.elements.CheckBoxTest" />
+        </classes>
+    </test>
+    <test name="ChromeTestsMobileFirefox">
+        <parameter name="browser" value="firefox" />
+        <parameter name="deviceName" value="iPhone 12" />
+        <classes>
+            <class name="com.demoqa.tests.elements.TextBoxTest" />
+            <class name="com.demoqa.tests.elements.ButtonTest" />
+            <class name="com.demoqa.tests.elements.RadioButtonTest" />
+            <class name="com.demoqa.tests.elements.CheckBoxTest" />
+        </classes>
+    </test>
+    <test name="ChromeTestsTabletFirefox">
+        <parameter name="browser" value="firefox" />
+        <parameter name="deviceName" value="iPad" />
+        <classes>
+            <class name="com.demoqa.tests.elements.TextBoxTest" />
+            <class name="com.demoqa.tests.elements.ButtonTest" />
+            <class name="com.demoqa.tests.elements.RadioButtonTest" />
+            <class name="com.demoqa.tests.elements.CheckBoxTest" />
+        </classes>
+    </test>
+    <test name="ChromeTestsTabletFirefox">
+        <parameter name="browser" value="firefox" />
+        <parameter name="deviceName" value="Samsung Tab S8" />
+        <classes>
+            <class name="com.demoqa.tests.elements.TextBoxTest" />
+            <class name="com.demoqa.tests.elements.ButtonTest" />
+            <class name="com.demoqa.tests.elements.RadioButtonTest" />
+            <class name="com.demoqa.tests.elements.CheckBoxTest" />
+        </classes>
+    </test>
 </suite>
