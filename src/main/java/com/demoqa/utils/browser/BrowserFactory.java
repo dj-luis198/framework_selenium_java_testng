@@ -23,7 +23,8 @@ import java.util.Map;
 //ThreadGuard para que aseguremos que el controlador solo sea llamado por el hilo que lo creo.
 
 public class BrowserFactory {
-    private BrowserFactory() {}
+    private BrowserFactory() {
+    }
 
     private static final ThreadLocal<WebDriver> driver = new ThreadLocal<>();
 
@@ -33,7 +34,7 @@ public class BrowserFactory {
     private static final String RUN_LOCAL = prop.initProperties("general").getProperty("run.local");
 
     public static WebDriver getDriver() {
-        return driver.get();
+        return ThreadGuard.protect(driver.get());
     }
 
     public static void setDriver(WebDriver webDriver) {
@@ -93,7 +94,7 @@ public class BrowserFactory {
                 break;
             case "firefox":
                 FirefoxOptions fireOptions = new FirefoxOptions();
-                configureFirefoxOptions(fireOptions,device);
+                configureFirefoxOptions(fireOptions, device);
                 setDriver(ThreadGuard.protect(new FirefoxDriver(fireOptions)));
                 configureDimensions(getDriver(), device);
                 break;

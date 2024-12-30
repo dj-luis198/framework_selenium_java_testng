@@ -1,15 +1,17 @@
 package com.demoqa.utils.external_file_utility;
 
-import com.demoqa.utils.exceptions.FileException;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
 import java.io.BufferedReader;
 import java.io.FileReader;
 import java.io.IOException;
 
 public class CSVReader {
+    private static final Logger logger = LogManager.getLogger(CSVReader.class);
     private CSVReader() {}
 
-    public static String[][] readCSV(String filePath, String delimiter) throws FileException {
+    public static String[][] readCSV(String filePath, String delimiter) throws IOException {
         String[][] data;
         String line;
         int rows = 0;
@@ -24,7 +26,8 @@ public class CSVReader {
                 rows++;
             }
         } catch (IOException e) {
-            throw new FileException("read or write error",e);
+            logger.error("read or write error",e);
+            throw new IOException();
         }
         try (BufferedReader reader = new BufferedReader(new FileReader(filePath))) {
             data = new String[rows][cols];
@@ -35,7 +38,8 @@ public class CSVReader {
                 row++;
             }
         } catch (IOException e) {
-            throw new FileException("read or write error",e);
+            logger.error("read or write error",e);
+            throw new IOException();
         }
         return data;
     }

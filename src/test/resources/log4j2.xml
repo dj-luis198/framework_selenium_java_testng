@@ -13,6 +13,7 @@
     <Loggers>
         <Root level="info">
             <AppenderRef ref="STDOUT" />
+            <AppenderRef ref="LOGFILE" />
         </Root>
     </Loggers>
 </Configuration>

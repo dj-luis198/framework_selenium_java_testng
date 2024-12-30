@@ -17,26 +17,40 @@ public class HomePage {
     private WebElement menuListButtons;
     @FindBy(xpath = "//span[normalize-space()='Text Box']")
     private WebElement menuListTextBox;
+    @FindBy(xpath = "//span[normalize-space()='Radio Button']")
+    private WebElement menuListRadioButton;
+    @FindBy(xpath = "//span[normalize-space()='Check Box']")
+    private WebElement menuListCheckBox;
 
     public HomePage(WebDriver driver) {
-        PageFactory.initElements(driver,this);
+        PageFactory.initElements(driver, this);
         this.elementActions = new ElementActions(driver);
-        this.driver=driver;
+        this.driver = driver;
         Ads ads = new Ads(driver);
         ads.removeAds();
     }
 
-    public void clickCardElements(){
+    public void clickCardElements() {
         elementActions.click(cardElements);
     }
 
-    public ButtonsPage clickMenuListButtons(){
+    public ButtonsPage clickMenuListButtons() {
         elementActions.click(menuListButtons);
         return new ButtonsPage(driver);
     }
 
-    public TextBoxPage clickMenuListTextBox(){
+    public TextBoxPage clickMenuListTextBox() {
         elementActions.click(menuListTextBox);
         return new TextBoxPage(driver);
+    }
+
+    public RadioButtonPage clickMenuListRadioButton() {
+        elementActions.click(menuListRadioButton);
+        return new RadioButtonPage(driver);
+    }
+
+    public CheckBoxPage clickMenuListCheckBox() {
+        elementActions.click(menuListCheckBox);
+        return new CheckBoxPage(driver);
     }
 }

@@ -109,5 +109,17 @@ public enum Properties {
         public String toString() {
             return "ariaDisabled";
         }
+    },
+    DISABLED {
+        @Override
+        public String toString() {
+            return "disabled";
+        }
+    },
+    CHECKED {
+        @Override
+        public String toString() {
+            return "checked";
+        }
     };
 }

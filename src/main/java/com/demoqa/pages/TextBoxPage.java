@@ -1,5 +1,7 @@
 package com.demoqa.pages;
 
+import com.demoqa.pages.ads.Ads;
+import com.demoqa.utils.enums.Properties;
 import com.demoqa.utils.web_interactions.ElementActions;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
@@ -17,20 +19,16 @@ public class TextBoxPage {
     private WebElement userCurrentAddress;
     @FindBy(id = "permanentAddress")
     private WebElement userPermanentAddress;
+    @FindBy(id = "output")
+    private WebElement output;
     @FindBy(id = "submit")
     private WebElement submit;
-    @FindBy(id = "name")
-    private WebElement outputName;
-    @FindBy(id = "email")
-    private WebElement outputEmail;
-    @FindBy(xpath = "//p[@id='currentAddress']")
-    private WebElement outputCurrentAddress;
-    @FindBy(xpath = "//p[@id='permanentAddress']")
-    private WebElement outputPermanentAddress;
 
     public TextBoxPage(WebDriver driver) {
         PageFactory.initElements(driver, this);
         elementActions = new ElementActions(driver);
+        Ads ads = new Ads(driver);
+        ads.removeAds();
     }
 
     public void fillForm(String name, String email, String currentAddress, String permanentAddress) {
@@ -41,19 +39,7 @@ public class TextBoxPage {
         elementActions.click(submit);
     }
 
-    public String getOutputName() {
-        return elementActions.getText(outputName);
-    }
-
-    public String getOutputEmail() {
-        return elementActions.getText(outputEmail);
-    }
-
-    public String getOutputCurrentAddress() {
-        return elementActions.getText(outputCurrentAddress);
-    }
-
-    public String getOutputPermanentAddress() {
-        return elementActions.getText(outputPermanentAddress);
+    public String getOutput() {
+        return elementActions.getDomProperty(output, Properties.OUTER_TEXT.toString());
     }
 }
