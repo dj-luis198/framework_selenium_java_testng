@@ -14,7 +14,7 @@ public class Base {
                        @Optional("Nest Hub Max") String deviceName) {
         WebDriver driver = BrowserFactory.getDriver(browser, deviceName);
         driver.get("https://demoqa.com/");
-        driver.manage().window().maximize();
+//        driver.manage().window().maximize();
     }
 
     @AfterMethod
