@@ -14,7 +14,7 @@
             <class name="com.demoqa.tests.elements.CheckBoxTest" />
         </classes>
     </test>
-    <test name="ChromeTestsMobileChrome">
+    <test name="ChromeTestsMobilePixel2Chrome">
         <parameter name="browser" value="chrome" />
         <parameter name="deviceName" value="Pixel 2" />
         <classes>
@@ -24,7 +24,7 @@
             <class name="com.demoqa.tests.elements.CheckBoxTest" />
         </classes>
     </test>
-    <test name="ChromeTestsMobileChrome">
+    <test name="ChromeTestsMobileSamsungS10Chrome">
         <parameter name="browser" value="chrome" />
         <parameter name="deviceName" value="Samsung S10" />
         <classes>
@@ -34,7 +34,7 @@
             <class name="com.demoqa.tests.elements.CheckBoxTest" />
         </classes>
     </test>
-    <test name="ChromeTestsMobileChrome">
+    <test name="ChromeTestsMobileiPhone12Chrome">
         <parameter name="browser" value="chrome" />
         <parameter name="deviceName" value="iPhone 12" />
         <classes>
@@ -44,7 +44,7 @@
             <class name="com.demoqa.tests.elements.CheckBoxTest" />
         </classes>
     </test>
-    <test name="ChromeTestsTabletChrome">
+    <test name="ChromeTestsTabletiPadChrome">
         <parameter name="browser" value="chrome" />
         <parameter name="deviceName" value="iPad" />
         <classes>
@@ -54,7 +54,7 @@
             <class name="com.demoqa.tests.elements.CheckBoxTest" />
         </classes>
     </test>
-    <test name="ChromeTestsTabletChrome">
+    <test name="ChromeTestsTabletSamsungTabS8Chrome">
         <parameter name="browser" value="chrome" />
         <parameter name="deviceName" value="Samsung Tab S8" />
         <classes>
@@ -75,7 +75,7 @@
             <class name="com.demoqa.tests.elements.CheckBoxTest" />
         </classes>
     </test>
-    <test name="ChromeTestsMobileFirefox">
+    <test name="ChromeTestsMobilePixel2Firefox">
         <parameter name="browser" value="firefox" />
         <parameter name="deviceName" value="Pixel 2" />
         <classes>
@@ -85,7 +85,7 @@
             <class name="com.demoqa.tests.elements.CheckBoxTest" />
         </classes>
     </test>
-    <test name="ChromeTestsMobileFirefox">
+    <test name="ChromeTestsMobileSamsungS10Firefox">
         <parameter name="browser" value="firefox" />
         <parameter name="deviceName" value="Samsung S10" />
         <classes>
@@ -95,7 +95,7 @@
             <class name="com.demoqa.tests.elements.CheckBoxTest" />
         </classes>
     </test>
-    <test name="ChromeTestsMobileFirefox">
+    <test name="ChromeTestsMobileiPhone12Firefox">
         <parameter name="browser" value="firefox" />
         <parameter name="deviceName" value="iPhone 12" />
         <classes>
@@ -105,7 +105,7 @@
             <class name="com.demoqa.tests.elements.CheckBoxTest" />
         </classes>
     </test>
-    <test name="ChromeTestsTabletFirefox">
+    <test name="ChromeTestsTabletiPadFirefox">
         <parameter name="browser" value="firefox" />
         <parameter name="deviceName" value="iPad" />
         <classes>
@@ -115,7 +115,7 @@
             <class name="com.demoqa.tests.elements.CheckBoxTest" />
         </classes>
     </test>
-    <test name="ChromeTestsTabletFirefox">
+    <test name="ChromeTestsTabletSamsungTabS8Firefox">
         <parameter name="browser" value="firefox" />
         <parameter name="deviceName" value="Samsung Tab S8" />
         <classes>
