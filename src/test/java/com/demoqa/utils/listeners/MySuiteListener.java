@@ -19,7 +19,7 @@ public class MySuiteListener implements ISuiteListener {
         copyHTML(reportFolder);
         File screenshotFolder = copyImages(reportFolder);
         deleteImages(screenshotFolder);
-        //deleteHTML();
+        deleteHTML();
     }
 
     private String createNewFolder() {
@@ -65,15 +65,15 @@ public class MySuiteListener implements ISuiteListener {
         }
     }
 
-//    private void deleteHTML() {
-//        File reportFile = new File(System.getProperty("user.dir") + "/ExtentReports/index.html");
-//        if (reportFile.exists()) {
-//            try {
-//                FileUtils.delete(reportFile);
-//            } catch (IOException e) {
-//                logger.error("Error  delete HTML", e);
-//            }
-//        }
-//    }
+    private void deleteHTML() {
+        File reportFile = new File(System.getProperty("user.dir") + "/ExtentReports/index.html");
+        if (reportFile.exists()) {
+            try {
+                FileUtils.delete(reportFile);
+            } catch (IOException e) {
+                logger.error("Error  delete HTML", e);
+            }
+        }
+    }
 }
 
